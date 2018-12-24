@@ -1,9 +1,8 @@
 import React from "react";
+import AddItemButton from "./add-item-button";
+import RemoveItemButton from "./remove-item-button";
 
 export default function ProductListItem(props) {
-  const thisItemInCart = props.cart.filter(
-    item => item.id === props.product.id
-  )[0];
   return (
     <div className="product-list-item" id={props.product.id}>
       <h3>{props.product.name}</h3>
@@ -15,10 +14,18 @@ export default function ProductListItem(props) {
       <div>{props.product.description}</div>
       <div>${props.product.price}</div>
       <div>
-        <button onClick={() => props.addToCart(props.product)}>
-          Agregar al carrito de compras(
-          {(thisItemInCart && thisItemInCart.quantity) || 0})
-        </button>
+        <AddItemButton
+          cartItem={props.cartItem}
+          product={props.product}
+          addToCart={props.addToCart}
+        />
+        {props.cartItem ? (
+          <RemoveItemButton
+            cartItem={props.cartItem}
+            product={props.product}
+            removeFromCart={props.removeFromCart}
+          />
+        ) : null}
       </div>
     </div>
   );
